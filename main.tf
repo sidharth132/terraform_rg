@@ -21,3 +21,9 @@ resource "azurerm_resource_group" "rg3" {
     location = "eastus"
   
 }
+
+resource "azurerm_resource_group" "rg4" {
+    name = "rg-dev4"
+    location = "eastus"
+  
+}
