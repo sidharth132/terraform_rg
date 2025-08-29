@@ -1,7 +1,5 @@
 # Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Minimal Terraform pipeline
 
 trigger:
 - none 
@@ -11,9 +9,12 @@ pool:
 
 steps:
 - task: TerraformInstaller@1
+  displayName: 'Install Terraform'
   inputs:
     terraformVersion: 'latest'
+
 - task: TerraformTask@5
+  displayName: 'Terraform Init'
   inputs:
     provider: 'azurerm'
     command: 'init'
@@ -23,23 +24,31 @@ steps:
     backendAzureRmStorageAccountName: 'aksado1'
     backendAzureRmContainerName: 'aksado1'
     backendAzureRmKey: 'tfstate'
+
 - task: TerraformTask@5
+  displayName: 'Terraform Fmt'
+  inputs:
+    provider: 'azurerm'
+    command: 'fmt'
+
+- task: TerraformTask@5
+  displayName: 'Terraform Validate'
   inputs:
     provider: 'azurerm'
     command: 'validate'
 
 - task: TerraformTask@5
+  displayName: 'Terraform Plan'
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    commandOptions: 'fmt'
     environmentServiceNameAzureRM: 'cloudinfanew'
     environmentAzureRmOverrideSubscriptionID: '5b810eac-4419-4b63-bec3-e76a59097aef'
+
 - task: TerraformTask@5
+  displayName: 'Terraform Apply'
   inputs:
     provider: 'azurerm'
     command: 'apply'
     environmentServiceNameAzureRM: 'cloudinfanew'
     environmentAzureRmOverrideSubscriptionID: '5b810eac-4419-4b63-bec3-e76a59097aef'
-
-
