@@ -25,11 +25,6 @@ steps:
     backendAzureRmContainerName: 'aksado1'
     backendAzureRmKey: 'tfstate'
 
-- task: TerraformTask@5
-  displayName: 'Terraform Fmt'
-  inputs:
-    provider: 'azurerm'
-    command: 'fmt'
 
 - task: TerraformTask@5
   displayName: 'Terraform Validate'
